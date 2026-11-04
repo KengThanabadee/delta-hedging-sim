@@ -1,6 +1,6 @@
-# Delta Hedging Research
+# delta-hedging-sim
 
-A research codebase for studying discrete delta hedging of BTC-style options. It is an offline simulation and backtest toolkit. It does not connect to any exchange, trade, or place orders, and it is not an automated trading bot.
+Small simulation and backtest code for trying out discrete delta hedging on BTC-style options. It runs offline only. It does not connect to any exchange, trade, or place orders, and it is not an automated trading bot.
 
 > **Current stage:** Monte Carlo simulation (GBM) and a single-path historical replay on BTC/USDT spot.
 
@@ -69,6 +69,6 @@ From Jupyter, open `simulation.ipynb` or `backtest.ipynb`.
 
 ## Limitations
 
-- Offline research only: no live data feed, order execution, position management, or risk limits.
+- Offline only: no live data feed, order execution, position management, or risk limits.
 - Single underlying, constant risk-free rate, no dividends or funding rates, and no bid/ask spread or market impact beyond the proportional fee.
 - Black-Scholes assumptions (constant volatility, lognormal prices) are used throughout, including on real BTC data, where they do not hold.

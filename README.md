@@ -1,8 +1,8 @@
 # delta-hedging-sim
 
-Small simulation and backtest code for trying out discrete delta hedging on BTC-style options. It runs offline only. It does not connect to any exchange, trade, or place orders, and it is not an automated trading bot.
+Small simulation code for trying out discrete delta hedging of a European option. It runs offline only. It does not connect to any exchange, trade, or place orders, and it is not an automated trading bot.
 
-> **Current stage:** Monte Carlo simulation (GBM) and a single-path historical replay on BTC/USDT spot.
+> **Current stage:** Monte Carlo simulation (GBM). The historical replay in `backtest.ipynb` was started but is unfinished and not being developed further.
 
 ## What is in the repo
 
@@ -15,7 +15,7 @@ Small simulation and backtest code for trying out discrete delta hedging on BTC-
 | `hedging/vol.py` | `realized_vol`: rolling log-return volatility |
 | `data_loader.py` | `DataLoader`: downloads historical candles from the Binance public API |
 | `simulation.ipynb` | Monte Carlo delta-hedging experiments, plus an earlier gamma-hedging experiment |
-| `backtest.ipynb` | Delta-hedge replay over one historical BTC/USDT path |
+| `backtest.ipynb` | Unfinished: delta-hedge replay over one historical BTC/USDT path |
 | `tests/` | Unit tests for the `hedging` package |
 
 ## Method and assumptions
@@ -29,13 +29,13 @@ Common to both notebooks:
 
 ### Monte Carlo (`simulation.ipynb`)
 
-- Prices follow GBM with a real-world drift `mu`, used as a simplified proxy for BTC. GBM has no jumps and no volatility clustering, so tail results here are optimistic compared with real BTC.
+- Prices follow GBM with a real-world drift `mu`, used as a simplified price model. GBM has no jumps and no volatility clustering, so tail results here are optimistic compared with real markets.
 - The hedger uses the true, constant simulation volatility `sigma` to compute deltas and the premium. Volatility misspecification is not modelled.
 - VaR and CVaR are computed on the distribution of terminal hedging P&L across paths. The "CVaR-adjusted premium" is the Black-Scholes premium plus CVaR.
 - The rebalancing-frequency study varies the number of hedge points over a fixed one-year horizon (189 to 441 points) and plots CVaR 95%.
 - The gamma-hedging section is an older experiment. Its own notes list its limitations, including a look-ahead gamma threshold. Treat it as exploratory.
 
-### Historical replay (`backtest.ipynb`)
+### Historical replay (`backtest.ipynb`, unfinished)
 
 - Input is hourly BTC/USDT spot closes from Binance (2024-01-01 to 2026-01-01). The first 30 days are dropped to warm up the rolling realized volatility.
 - Volatility is the trailing 30-day realized volatility, used as the Black-Scholes `sigma`. It is not implied volatility, and no real option prices or option market data are used.
